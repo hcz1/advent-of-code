@@ -7,13 +7,19 @@ const location = splitDirection.reduce(
   (prev, [position, value]) => {
     const numVal = parseInt(value);
     if (position === 'forward') {
-      return { horizontal: prev.horizontal + numVal, depth: prev.depth };
+      return { ...prev, horizontal: prev.horizontal + numVal };
     }
     if (position === 'down') {
-      return { horizontal: prev.horizontal, depth: prev.depth + numVal };
+      return {
+        ...prev,
+        depth: prev.depth + numVal,
+      };
     }
     if (position === 'up') {
-      return { horizontal: prev.horizontal, depth: prev.depth - numVal };
+      return {
+        ...prev,
+        depth: prev.depth - numVal,
+      };
     }
   },
   {
@@ -29,22 +35,20 @@ const { horizontal, depth, aim } = splitDirection.reduce(
     const numVal = parseInt(value);
     if (position === 'forward') {
       return {
+        ...prev,
         horizontal: prev.horizontal + numVal,
         depth: prev.aim === 0 ? prev.depth : prev.depth + numVal * prev.aim,
-        aim: prev.aim,
       };
     }
     if (position === 'down') {
       return {
-        horizontal: prev.horizontal,
-        depth: prev.depth,
+        ...prev,
         aim: prev.aim + numVal,
       };
     }
     if (position === 'up') {
       return {
-        horizontal: prev.horizontal,
-        depth: prev.depth,
+        ...prev,
         aim: prev.aim - numVal,
       };
     }
